@@ -1,0 +1,12 @@
+$body-bg-color: black;
+$font-size: 4em;
+$text-color: hotpink;
+
+body {
+  background-color: $body-bg-color;
+  font-size: $font-size;
+  color: $text-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
