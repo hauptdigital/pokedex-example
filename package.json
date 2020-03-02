@@ -12,6 +12,10 @@
       "pre-push": "npm test"
     }
   },
+  "lint-staged": {
+    "*.{js}": "eslint --fix",
+    "*.{js,md,css,json}": "prettier --write"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hauptdigital/pokedex-example.git"
@@ -28,6 +32,7 @@
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
     "husky": "^4.2.3",
+    "lint-staged": "^10.0.8",
     "prettier": "^1.19.1"
   }
 }
