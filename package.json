@@ -1,0 +1,20 @@
+{
+  "name": "pokedex-example",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hauptdigital/pokedex-example.git"
+  },
+  "keywords": [],
+  "author": "Mr. NiceGuy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hauptdigital/pokedex-example/issues"
+  },
+  "homepage": "https://github.com/hauptdigital/pokedex-example#readme"
+}
