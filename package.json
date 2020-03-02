@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "start": "webpack-dev-server --open",
-    "test": "eslint src/**"
+    "test": "eslint src/ --ext .js src/"
   },
   "husky": {
     "hooks": {
