@@ -1,0 +1,38 @@
+{
+  "name": "pokedex-example",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "test": "eslint src/**"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm test"
+    }
+  },
+  "lint-staged": {
+    "*.{js}": "eslint --fix",
+    "*.{js,md,css,json}": "prettier --write"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hauptdigital/pokedex-example.git"
+  },
+  "keywords": [],
+  "author": "Mr. NiceGuy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hauptdigital/pokedex-example/issues"
+  },
+  "homepage": "https://github.com/hauptdigital/pokedex-example#readme",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.0.8",
+    "prettier": "^1.19.1"
+  }
+}
