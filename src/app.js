@@ -2,6 +2,7 @@ import './app.scss';
 import { createElement } from './lib/dom';
 import { title } from './components/title';
 import { search, createSearchResults } from './components/search';
+import Logo from './assets/img/logo.png';
 
 export function app() {
   const header = createElement('header', {
@@ -12,7 +13,7 @@ export function app() {
   });
   const logo = createElement('img', {
     className: 'header__logo',
-    src: 'https://img.icons8.com/color/96/000000/pokeball--v1.png'
+    src: Logo
   });
   const titleElement = title('Pokedex');
   const searchElement = search('Pokémon suchen...');
