@@ -1,5 +1,13 @@
-@use '../index.scss';
+@use './theme.scss';
 
 .search {
-  font-size: index.$font-size;
+  width: 100%;
+  border: none;
+  border-radius: 35px;
+  outline: none;
+  color: theme.$primary-color;
+  box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.2);
+  padding: 0.5em 1em;
+  margin: 1em 0.5em;
+  font-size: 1em;
 }

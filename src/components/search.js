@@ -3,7 +3,7 @@ import { createElement } from '../lib/dom';
 
 export function search(placeholder) {
   const element = createElement('input', {
-    type: 'search',
+    type: 'text',
     className: 'search',
     placeholder: placeholder
   });
