@@ -1,0 +1,15 @@
+@use './components/theme.scss';
+
+.header {
+  display: flex;
+  justify-content: center;
+  background-color: theme.$secondary-bg-color;
+  color: theme.$alternate-color;
+  padding: 1em 0em;
+  font-family: 'Spartan', sans-serif;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+}
