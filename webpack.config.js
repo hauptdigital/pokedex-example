@@ -29,11 +29,15 @@ module.exports = {
             options: {
               implementation: require('sass')
             }
-          }
-          
-          
+          }    
         ]
-      }
+      },
+      {
+         test: /\.(png|svg|jpg|gif)$/,
+         use: [
+           'file-loader',
+         ],
+       },
     ]
   }
 };
