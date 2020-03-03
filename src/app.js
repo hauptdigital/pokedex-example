@@ -1,7 +1,11 @@
 import './app.scss';
 import { createElement } from './lib/dom';
 import { title } from './components/title';
-import { search, createSearchResults } from './components/search';
+import {
+  search,
+  createSearchResults,
+  filterResults
+} from './components/search';
 import Logo from './assets/img/logo.png';
 
 export function app() {
@@ -186,9 +190,7 @@ export function app() {
 
   searchElement.addEventListener('keyup', event => {
     let searchValue = event.target.value;
-    const filteredPokemons = pokemons.filter(pokemon => {
-      return pokemon.startsWith(searchValue);
-    });
+    const filteredPokemons = filterResults(searchValue, pokemons);
 
     if (filteredPokemons.length > 0) {
       const searchResults = createSearchResults(filteredPokemons);

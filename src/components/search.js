@@ -23,3 +23,13 @@ export function createSearchResults(searchQueryResults) {
 
   return container;
 }
+
+export function filterResults(searchQuery, data) {
+  const result = data
+    .filter(entry => {
+      return entry.startsWith(searchQuery);
+    })
+    .sort();
+
+  return result;
+}
