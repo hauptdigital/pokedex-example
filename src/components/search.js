@@ -10,3 +10,16 @@ export function search(placeholder) {
 
   return element;
 }
+
+export function createSearchResults(searchQueryResults) {
+  let searchResults = createElement('div', { className: 'search-results' });
+  searchQueryResults.forEach(searchQueryResult => {
+    let searchResultsEntry = createElement('div', {
+      className: 'search-results__entry',
+      innerText: searchQueryResult
+    });
+    searchResults.appendChild(searchResultsEntry);
+  });
+
+  return searchResults;
+}
