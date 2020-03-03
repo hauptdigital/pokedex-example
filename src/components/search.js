@@ -12,14 +12,14 @@ export function search(placeholder) {
 }
 
 export function createSearchResults(searchQueryResults) {
-  let searchResults = createElement('div', { className: 'search-results' });
+  const container = createElement('div', {});
   searchQueryResults.forEach(searchQueryResult => {
     let searchResultsEntry = createElement('div', {
       className: 'search-results__entry',
       innerText: searchQueryResult
     });
-    searchResults.appendChild(searchResultsEntry);
+    container.appendChild(searchResultsEntry);
   });
 
-  return searchResults;
+  return container;
 }
