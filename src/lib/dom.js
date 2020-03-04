@@ -17,3 +17,11 @@ export function appendElement(parent, elements = {}) {
 
   return elements;
 }
+
+export function removeAllChilds(node) {
+  while (node.firstChild) {
+    node.removeChild(node.firstChild);
+  }
+
+  return node;
+}

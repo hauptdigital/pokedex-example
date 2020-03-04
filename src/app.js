@@ -1,5 +1,5 @@
 import './app.scss';
-import { createElement, appendElement } from './lib/dom';
+import { createElement, appendElement, removeAllChilds } from './lib/dom';
 import { createTitle } from './components/title';
 import { pokemons } from './components/data';
 import {
@@ -26,26 +26,25 @@ export function app() {
     className: 'search-query'
   });
 
-  const searchResultsWrapper = createElement('div', {
+  let searchResultsWrapper = createElement('div', {
     className: 'search-results'
   });
 
   appendElement(headerElement, [logo, titleElement]);
-  appendElement(mainElement, [searchElement, searchQueryElement]);
-  // mainElement.appendChild(searchElement);
-  // mainElement.appendChild(searchQueryElement);
+  appendElement(mainElement, [
+    searchElement,
+    searchQueryElement,
+    searchResultsWrapper
+  ]);
 
-  searchElement.addEventListener('keyup', event => {
+  searchElement.addEventListener('input', event => {
     let searchValue = event.target.value;
     const filteredPokemons = filterResults(searchValue, pokemons);
 
     if (filteredPokemons.length > 0) {
-      const searchResults = createSearchResults(
-        filteredPokemons,
-        searchResultsWrapper
-      );
-
-      mainElement.appendChild(searchResults);
+      const searchResults = createSearchResults(filteredPokemons);
+      searchResultsWrapper = removeAllChilds(searchResultsWrapper);
+      searchResultsWrapper.appendChild(searchResults);
     }
   });
 
