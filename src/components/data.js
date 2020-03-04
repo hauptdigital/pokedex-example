@@ -151,3 +151,5 @@ export const pokemons = [
   'Mewtwo',
   'Mew'
 ];
+
+export const bgColorClasses = ['bg-yellow', 'bg-blue', 'bg-navyblue'];

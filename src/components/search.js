@@ -1,5 +1,6 @@
 import './search.scss';
 import { createElement } from '../lib/dom';
+import { bgColorClasses } from './data';
 
 export function createSearch(value, placeholder) {
   const element = createElement('input', {
@@ -17,8 +18,10 @@ export function createResultElements(searchQueryResults) {
     className: 'search-results__list'
   });
   searchQueryResults.forEach(searchQueryResult => {
+    let randomBgColorClass =
+      bgColorClasses[Math.floor(Math.random() * bgColorClasses.length)];
     let searchResultsEntry = createElement('div', {
-      className: 'search-results__entry',
+      classList: 'search-results__entry ' + randomBgColorClass,
       innerText: searchQueryResult
     });
     searchResults.appendChild(searchResultsEntry);
