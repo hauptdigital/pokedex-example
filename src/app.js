@@ -2,14 +2,12 @@ import './app.scss';
 import { createElement, appendElement, removeAllChilds } from './lib/dom';
 import { createTitle } from './components/title';
 import { pokemons } from './components/data';
-import {
-  createSearch,
-  createSearchResults,
-  filterResults
-} from './components/search';
+import { createSearch, createSearchResults } from './components/search';
 import Logo from './assets/img/logo.png';
 
 export function app() {
+  // Create elements
+
   const headerElement = createElement('header', {
     className: 'header'
   });
@@ -21,32 +19,39 @@ export function app() {
     src: Logo
   });
   const titleElement = createTitle('Pokedex');
-  const searchElement = createSearch('Pokémon suchen...');
-  const searchQueryElement = createElement('div', {
-    className: 'search-query'
-  });
+  const searchElement = createSearch(
+    localStorage.getItem('searchQuery'),
+    'Pokémon suchen...'
+  );
 
   let searchResultsWrapper = createElement('div', {
     className: 'search-results'
   });
 
+  // Init
+
+  const searchValue = searchElement.value;
+  let searchResults = createSearchResults(searchValue, pokemons);
+  searchResultsWrapper.appendChild(searchResults);
+
+  // Build app
+
   appendElement(headerElement, [logo, titleElement]);
-  appendElement(mainElement, [
-    searchElement,
-    searchQueryElement,
-    searchResultsWrapper
-  ]);
+  appendElement(mainElement, [searchElement, searchResultsWrapper]);
+
+  // Event handler(s)
 
   searchElement.addEventListener('input', event => {
-    let searchValue = event.target.value;
-    const filteredPokemons = filterResults(searchValue, pokemons);
+    const searchValue = event.target.value;
 
-    if (filteredPokemons.length > 0) {
-      const searchResults = createSearchResults(filteredPokemons);
-      searchResultsWrapper = removeAllChilds(searchResultsWrapper);
-      searchResultsWrapper.appendChild(searchResults);
-    }
+    searchResults = createSearchResults(searchValue, pokemons);
+    searchResultsWrapper = removeAllChilds(searchResultsWrapper);
+    searchResultsWrapper.appendChild(searchResults);
+
+    localStorage.setItem('searchQuery', searchValue);
   });
+
+  // Return app
 
   return [headerElement, mainElement];
 }

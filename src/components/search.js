@@ -1,17 +1,18 @@
 import './search.scss';
 import { createElement } from '../lib/dom';
 
-export function createSearch(placeholder) {
+export function createSearch(value, placeholder) {
   const element = createElement('input', {
     type: 'text',
     className: 'search',
+    value: value,
     placeholder: placeholder
   });
 
   return element;
 }
 
-export function createSearchResults(searchQueryResults) {
+export function createResultElements(searchQueryResults) {
   let searchResults = createElement('div');
   searchQueryResults.forEach(searchQueryResult => {
     let searchResultsEntry = createElement('div', {
@@ -30,6 +31,11 @@ export function filterResults(searchQuery, data) {
       return entry.toLowerCase().startsWith(searchQuery.toLowerCase());
     })
     .sort();
-
   return result;
+}
+
+export function createSearchResults(searchValue, data) {
+  const filteredItems = filterResults(searchValue, data);
+  const searchResults = createResultElements(filteredItems);
+  return searchResults;
 }
