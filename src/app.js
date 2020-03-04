@@ -6,6 +6,8 @@ import { createSearch, createSearchResults } from './components/search';
 import Logo from './assets/img/logo.png';
 
 export function app() {
+  // Create elements
+
   const headerElement = createElement('header', {
     className: 'header'
   });
@@ -17,37 +19,39 @@ export function app() {
     src: Logo
   });
   const titleElement = createTitle('Pokedex');
-  const searchElement = createSearch('Pokémon suchen...');
-  const searchQueryElement = createElement('div', {
-    className: 'search-query'
-  });
+  const searchElement = createSearch(
+    localStorage.getItem('searchQuery'),
+    'Pokémon suchen...'
+  );
 
   let searchResultsWrapper = createElement('div', {
     className: 'search-results'
   });
 
-  // Read local storage
-  const searchQuery = localStorage.getItem('searchQuery');
+  // Init
 
-  if (searchQuery) {
-    searchElement.value = searchQuery;
-  }
+  const searchValue = searchElement.value;
+  let searchResults = createSearchResults(searchValue, pokemons);
+  searchResultsWrapper.appendChild(searchResults);
+
+  // Build app
 
   appendElement(headerElement, [logo, titleElement]);
-  appendElement(mainElement, [
-    searchElement,
-    searchQueryElement,
-    searchResultsWrapper
-  ]);
+  appendElement(mainElement, [searchElement, searchResultsWrapper]);
+
+  // Event handler(s)
 
   searchElement.addEventListener('input', event => {
     const searchValue = event.target.value;
-    const searchResults = createSearchResults(searchValue, pokemons);
+
+    searchResults = createSearchResults(searchValue, pokemons);
     searchResultsWrapper = removeAllChilds(searchResultsWrapper);
     searchResultsWrapper.appendChild(searchResults);
 
     localStorage.setItem('searchQuery', searchValue);
   });
+
+  // Return app
 
   return [headerElement, mainElement];
 }

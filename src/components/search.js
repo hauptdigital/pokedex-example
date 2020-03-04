@@ -1,10 +1,11 @@
 import './search.scss';
 import { createElement } from '../lib/dom';
 
-export function createSearch(placeholder) {
+export function createSearch(value, placeholder) {
   const element = createElement('input', {
     type: 'text',
     className: 'search',
+    value: value,
     placeholder: placeholder
   });
 
@@ -30,7 +31,6 @@ export function filterResults(searchQuery, data) {
       return entry.toLowerCase().startsWith(searchQuery.toLowerCase());
     })
     .sort();
-
   return result;
 }
 
