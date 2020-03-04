@@ -12,7 +12,7 @@ export function createSearch(placeholder) {
 }
 
 export function createSearchResults(searchQueryResults) {
-  let searchResults = createElement('div', { className: 'search-results' });
+  let searchResults = createElement('div');
   searchQueryResults.forEach(searchQueryResult => {
     let searchResultsEntry = createElement('div', {
       className: 'search-results__entry',
@@ -27,7 +27,7 @@ export function createSearchResults(searchQueryResults) {
 export function filterResults(searchQuery, data) {
   const result = data
     .filter(entry => {
-      return entry.startsWith(searchQuery);
+      return entry.toLowerCase().startsWith(searchQuery.toLowerCase());
     })
     .sort();
 
