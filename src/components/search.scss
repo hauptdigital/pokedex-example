@@ -81,3 +81,14 @@
     margin: 0.5em 0.5%;
   }
 }
+
+.search-results__favorite {
+  border: none;
+  outline: none;
+  padding: 0.5em;
+  font-size: 0.5em;
+}
+
+.search-results__favorite.active {
+  background-color: theme.$secondary-bg-color;
+}

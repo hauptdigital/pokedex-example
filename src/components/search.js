@@ -20,10 +20,26 @@ export function createResultElements(searchQueryResults) {
   searchQueryResults.forEach(searchQueryResult => {
     let randomBgColorClass =
       bgColorClasses[Math.floor(Math.random() * bgColorClasses.length)];
+
     let searchResultsEntry = createElement('div', {
       classList: 'search-results__entry ' + randomBgColorClass,
       innerText: searchQueryResult
     });
+
+    let favoriteButton = createElement('button', {
+      classList: 'search-results__favorite',
+      innerText: 'favorit'
+    });
+    favoriteButton.dataset.entry = searchQueryResult;
+
+    favoriteButton.addEventListener('click', event => {
+      const button = event.target;
+      button.classList.toggle('active');
+      const favorites = [button.dataset.entry];
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+      favoriteButton.dataset.entry = searchQueryResult;
+    });
+    searchResultsEntry.appendChild(favoriteButton);
     searchResults.appendChild(searchResultsEntry);
   });
 
