@@ -27,10 +27,10 @@ export function app() {
   });
 
   // Read local storage
-  const lastSearchQuery = localStorage.getItem('lastSearchQuery');
+  const searchQuery = localStorage.getItem('searchQuery');
 
-  if (lastSearchQuery) {
-    searchElement.value = lastSearchQuery;
+  if (searchQuery) {
+    searchElement.value = searchQuery;
   }
 
   appendElement(headerElement, [logo, titleElement]);
@@ -46,7 +46,7 @@ export function app() {
     searchResultsWrapper = removeAllChilds(searchResultsWrapper);
     searchResultsWrapper.appendChild(searchResults);
 
-    localStorage.setItem('lastSearchQuery', searchValue);
+    localStorage.setItem('searchQuery', searchValue);
   });
 
   return [headerElement, mainElement];
