@@ -13,7 +13,9 @@ export function createSearch(value, placeholder) {
 }
 
 export function createResultElements(searchQueryResults) {
-  let searchResults = createElement('div');
+  let searchResults = createElement('div', {
+    className: 'search-results__list'
+  });
   searchQueryResults.forEach(searchQueryResult => {
     let searchResultsEntry = createElement('div', {
       className: 'search-results__entry',
