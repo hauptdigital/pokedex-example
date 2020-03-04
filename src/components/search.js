@@ -30,14 +30,27 @@ export function createResultElements(searchQueryResults) {
       classList: 'search-results__favorite',
       innerText: 'favorit'
     });
+
     favoriteButton.dataset.entry = searchQueryResult;
 
     favoriteButton.addEventListener('click', event => {
+      const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
       const button = event.target;
+      const dataEntry = button.dataset.entry;
       button.classList.toggle('active');
-      const favorites = [button.dataset.entry];
+      const isActive = button.classList.contains('active') ? true : false;
+      if (!favorites.includes(dataEntry) && isActive) {
+        favorites.push(dataEntry);
+      } else if (!isActive) {
+        const index = favorites.indexOf(dataEntry);
+        if (index > -1) {
+          favorites.splice(index, 1);
+        }
+      }
+
       localStorage.setItem('favorites', JSON.stringify(favorites));
-      favoriteButton.dataset.entry = searchQueryResult;
+      console.log(favorites);
     });
     searchResultsEntry.appendChild(favoriteButton);
     searchResults.appendChild(searchResultsEntry);
