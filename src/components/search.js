@@ -11,7 +11,7 @@ export function createSearch(placeholder) {
   return element;
 }
 
-export function createSearchResults(searchQueryResults) {
+export function createResultElements(searchQueryResults) {
   let searchResults = createElement('div');
   searchQueryResults.forEach(searchQueryResult => {
     let searchResultsEntry = createElement('div', {
@@ -32,4 +32,10 @@ export function filterResults(searchQuery, data) {
     .sort();
 
   return result;
+}
+
+export function createSearchResults(searchValue, data) {
+  const filteredItems = filterResults(searchValue, data);
+  const searchResults = createResultElements(filteredItems);
+  return searchResults;
 }

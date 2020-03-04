@@ -2,11 +2,7 @@ import './app.scss';
 import { createElement, appendElement, removeAllChilds } from './lib/dom';
 import { createTitle } from './components/title';
 import { pokemons } from './components/data';
-import {
-  createSearch,
-  createSearchResults,
-  filterResults
-} from './components/search';
+import { createSearch, createSearchResults } from './components/search';
 import Logo from './assets/img/logo.png';
 
 export function app() {
@@ -30,6 +26,13 @@ export function app() {
     className: 'search-results'
   });
 
+  // Read local storage
+  const lastSearchQuery = localStorage.getItem('lastSearchQuery');
+
+  if (lastSearchQuery) {
+    searchElement.value = lastSearchQuery;
+  }
+
   appendElement(headerElement, [logo, titleElement]);
   appendElement(mainElement, [
     searchElement,
@@ -38,14 +41,12 @@ export function app() {
   ]);
 
   searchElement.addEventListener('input', event => {
-    let searchValue = event.target.value;
-    const filteredPokemons = filterResults(searchValue, pokemons);
+    const searchValue = event.target.value;
+    const searchResults = createSearchResults(searchValue, pokemons);
+    searchResultsWrapper = removeAllChilds(searchResultsWrapper);
+    searchResultsWrapper.appendChild(searchResults);
 
-    if (filteredPokemons.length > 0) {
-      const searchResults = createSearchResults(filteredPokemons);
-      searchResultsWrapper = removeAllChilds(searchResultsWrapper);
-      searchResultsWrapper.appendChild(searchResults);
-    }
+    localStorage.setItem('lastSearchQuery', searchValue);
   });
 
   return [headerElement, mainElement];
