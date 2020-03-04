@@ -1,7 +1,7 @@
 import './search.scss';
 import { createElement } from '../lib/dom';
 
-export function search(placeholder) {
+export function createSearch(placeholder) {
   const element = createElement('input', {
     type: 'text',
     className: 'search',
@@ -22,4 +22,14 @@ export function createSearchResults(searchQueryResults) {
   });
 
   return searchResults;
+}
+
+export function filterResults(searchQuery, data) {
+  const result = data
+    .filter(entry => {
+      return entry.startsWith(searchQuery);
+    })
+    .sort();
+
+  return result;
 }
