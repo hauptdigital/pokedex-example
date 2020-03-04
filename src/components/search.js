@@ -1,7 +1,7 @@
 import './search.scss';
 import { createElement } from '../lib/dom';
 
-export function search(placeholder) {
+export function createSearch(placeholder) {
   const element = createElement('input', {
     type: 'text',
     className: 'search',
@@ -12,16 +12,16 @@ export function search(placeholder) {
 }
 
 export function createSearchResults(searchQueryResults) {
-  const container = createElement('div', {});
+  let searchResults = createElement('div', { className: 'search-results' });
   searchQueryResults.forEach(searchQueryResult => {
     let searchResultsEntry = createElement('div', {
       className: 'search-results__entry',
       innerText: searchQueryResult
     });
-    container.appendChild(searchResultsEntry);
+    searchResults.appendChild(searchResultsEntry);
   });
 
-  return container;
+  return searchResults;
 }
 
 export function filterResults(searchQuery, data) {

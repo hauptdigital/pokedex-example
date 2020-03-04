@@ -1,27 +1,27 @@
 import './app.scss';
-import { createElement } from './lib/dom';
-import { title } from './components/title';
+import { createElement, appendElement } from './lib/dom';
+import { createTitle } from './components/title';
 import { pokemons } from './components/data';
 import {
-  search,
+  createSearch,
   createSearchResults,
   filterResults
 } from './components/search';
 import Logo from './assets/img/logo.png';
 
 export function app() {
-  const header = createElement('header', {
+  const headerElement = createElement('header', {
     className: 'header'
   });
-  const main = createElement('main', {
+  const mainElement = createElement('main', {
     className: 'main'
   });
   const logo = createElement('img', {
     className: 'header__logo',
     src: Logo
   });
-  const titleElement = title('Pokedex');
-  const searchElement = search('Pokémon suchen...');
+  const titleElement = createTitle('Pokedex');
+  const searchElement = createSearch('Pokémon suchen...');
   const searchQueryElement = createElement('div', {
     className: 'search-query'
   });
@@ -30,22 +30,24 @@ export function app() {
     className: 'search-results'
   });
 
-  header.appendChild(logo);
-  header.appendChild(titleElement);
-  main.appendChild(searchElement);
-  main.appendChild(searchQueryElement);
-  main.appendChild(searchResultsWrapper);
+  appendElement(headerElement, [logo, titleElement]);
+  appendElement(mainElement, [searchElement, searchQueryElement]);
+  // mainElement.appendChild(searchElement);
+  // mainElement.appendChild(searchQueryElement);
 
   searchElement.addEventListener('keyup', event => {
     let searchValue = event.target.value;
     const filteredPokemons = filterResults(searchValue, pokemons);
 
     if (filteredPokemons.length > 0) {
-      const searchResults = createSearchResults(filteredPokemons);
-      searchResultsWrapper.innerHTML = '';
-      searchResultsWrapper.appendChild(searchResults);
+      const searchResults = createSearchResults(
+        filteredPokemons,
+        searchResultsWrapper
+      );
+
+      mainElement.appendChild(searchResults);
     }
   });
 
-  return [header, main];
+  return [headerElement, mainElement];
 }
