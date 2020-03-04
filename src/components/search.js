@@ -27,7 +27,7 @@ export function createSearchResults(searchQueryResults) {
 export function filterResults(searchQuery, data) {
   const result = data
     .filter(entry => {
-      return entry.toLowerCase().includes(searchQuery.toLowerCase());
+      return entry.toLowerCase().startsWith(searchQuery.toLowerCase());
     })
     .sort();
 
