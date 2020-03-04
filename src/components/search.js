@@ -2,12 +2,12 @@ import './search.scss';
 import { createElement } from '../lib/dom';
 import { bgColorClasses } from './data';
 
-export function createSearch(value, placeholder) {
+export function createSearch(props) {
   const element = createElement('input', {
     type: 'text',
     className: 'search',
-    value: value,
-    placeholder: placeholder
+    value: props.value,
+    placeholder: props.placeholder
   });
 
   return element;

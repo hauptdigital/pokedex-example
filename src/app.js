@@ -19,10 +19,10 @@ export function app() {
     src: Logo
   });
   const titleElement = createTitle('Pokedex');
-  const searchElement = createSearch(
-    localStorage.getItem('searchQuery'),
-    'Pokémon suchen...'
-  );
+  const searchElement = createSearch({
+    value: localStorage.getItem('searchQuery'),
+    placeholder: 'Pokémon suchen...'
+  });
 
   let searchResultsWrapper = createElement('div', {
     className: 'search-results'
