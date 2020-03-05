@@ -57,14 +57,12 @@ export function createResultElements(searchQueryResults) {
       button.classList.toggle('active');
 
       // Push / splice entry into / from favorites
-      const isActive = button.classList.contains('active');
-      if (!favorites.includes(dataEntry) && isActive) {
+
+      if (!favorites.includes(dataEntry)) {
         favorites.push(dataEntry);
-      } else if (!isActive) {
-        const index = favorites.indexOf(dataEntry);
-        if (index > -1) {
-          favorites.splice(index, 1);
-        }
+      } else {
+        const dataEntryIndex = favorites.indexOf(dataEntry);
+        favorites.splice(dataEntryIndex, 1);
       }
 
       localStorage.setItem('favorites', JSON.stringify(favorites));
