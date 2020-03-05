@@ -28,7 +28,7 @@ export function createResultElements(searchQueryResults) {
 
     let favoriteButton = createElement('button', {
       classList: 'search-results__favorite',
-      innerText: 'favorit'
+      innerText: 'favorite'
     });
 
     /* Favorites functionality */
