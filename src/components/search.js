@@ -1,6 +1,7 @@
 import './search.scss';
 import { createElement } from '../lib/dom';
 import { bgColorClasses } from './data';
+import { createFavoritesSection, createFavoriteButton } from './favorites';
 
 export function createSearch(props) {
   const element = createElement('input', {
@@ -26,25 +27,14 @@ export function createResultElements(searchQueryResults) {
       innerText: searchQueryResult
     });
 
-    let favoriteButton = createElement('button', {
-      classList: 'search-results__favorite',
-      innerText: 'favorite'
-    });
-
     /* Favorites functionality */
+    const favoriteButton = createFavoriteButton(searchQueryResult);
+    searchResultsEntry.appendChild(favoriteButton);
 
-    favoriteButton.dataset.entry = searchQueryResult;
-    const dataEntry = favoriteButton.dataset.entry;
+    // const dataEntry = favoriteButton.dataset.entry;
 
     // Read favorites from localStorage
-    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-
-    // Find out if entry is already favorite and add class active if true
-    const index = favorites.indexOf(dataEntry);
-    const isFavorite = index > -1;
-    if (isFavorite) {
-      favoriteButton.classList.add('active');
-    }
+    // const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
     // Click
     favoriteButton.addEventListener('click', event => {
@@ -66,10 +56,13 @@ export function createResultElements(searchQueryResults) {
       }
 
       localStorage.setItem('favorites', JSON.stringify(favorites));
+
+      /* Edit Favorites Section */
+
+      createFavoritesSection(favorites);
+
       console.log(favorites);
     });
-
-    searchResultsEntry.appendChild(favoriteButton);
 
     searchResults.appendChild(searchResultsEntry);
   });

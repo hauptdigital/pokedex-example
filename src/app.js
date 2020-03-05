@@ -3,6 +3,7 @@ import { createElement, appendElement, removeAllChilds } from './lib/dom';
 import { createTitle } from './components/title';
 import { pokemons } from './components/data';
 import { createSearch, createSearchResults } from './components/search';
+import { createFavoritesSection } from './components/favorites';
 import Logo from './assets/img/logo.png';
 
 export function app() {
@@ -28,6 +29,9 @@ export function app() {
     className: 'search-results'
   });
 
+  const favoritesSection = createFavoritesSection();
+  console.log(favoritesSection);
+
   // Init
 
   const searchValue = searchElement.value;
@@ -37,7 +41,11 @@ export function app() {
   // Build app
 
   appendElement(headerElement, [logo, titleElement]);
-  appendElement(mainElement, [searchElement, searchResultsWrapper]);
+  appendElement(mainElement, [
+    searchElement,
+    searchResultsWrapper,
+    favoritesSection
+  ]);
 
   // Event handler(s)
 
