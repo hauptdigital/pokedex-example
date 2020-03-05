@@ -41,7 +41,7 @@ export function createResultElements(searchQueryResults) {
 
     // Find out if entry is already favorite and add class active if true
     const index = favorites.indexOf(dataEntry);
-    const isFavorite = index > -1 ? true : false;
+    const isFavorite = index > -1;
     if (isFavorite) {
       favoriteButton.classList.add('active');
     }
