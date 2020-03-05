@@ -14,14 +14,11 @@ export function createSearch(props) {
   return element;
 }
 
-export function createResultElements(
-  searchQueryResults,
-  onFavoriteButtonClick
-) {
+export function createResultElements(filteredItems, onFavoriteButtonClick) {
   let searchResults = createElement('div', {
     className: 'search-results__list'
   });
-  searchQueryResults.forEach(searchQueryResult => {
+  filteredItems.forEach(searchQueryResult => {
     let randomBgColorClass =
       bgColorClasses[Math.floor(Math.random() * bgColorClasses.length)];
 
@@ -45,7 +42,8 @@ export function createResultElements(
   return searchResults;
 }
 
-export function filterResults(searchQuery, data) {
+export async function filterResults(searchQuery, getPokemons) {
+  const data = await getPokemons();
   const result = data
     .filter(entry => {
       return entry.toLowerCase().startsWith(searchQuery.toLowerCase());
@@ -54,11 +52,40 @@ export function filterResults(searchQuery, data) {
   return result;
 }
 
-export function createSearchResults(searchValue, data, onFavoriteButtonClick) {
-  const filteredItems = filterResults(searchValue, data);
-  const searchResults = createResultElements(
-    filteredItems,
-    onFavoriteButtonClick
-  );
+export async function createSearchResults(
+  searchQuery,
+  getData,
+  onFavoriteButtonClick
+) {
+  const data = await getData();
+  const filteredItems = data
+    .filter(entry => {
+      return entry.toLowerCase().startsWith(searchQuery.toLowerCase());
+    })
+    .sort();
+
+  let searchResults = createElement('div', {
+    className: 'search-results__list'
+  });
+  filteredItems.forEach(searchQueryResult => {
+    let randomBgColorClass =
+      bgColorClasses[Math.floor(Math.random() * bgColorClasses.length)];
+
+    let searchResultsEntry = createElement('div', {
+      classList: 'search-results__entry ' + randomBgColorClass,
+      innerText: searchQueryResult
+    });
+
+    /* Favorites functionality */
+    const favoriteButton = createFavoriteButton(searchQueryResult);
+    searchResultsEntry.appendChild(favoriteButton);
+
+    // Click
+    favoriteButton.addEventListener('click', event => {
+      onFavoriteButtonClick(event);
+    });
+
+    searchResults.appendChild(searchResultsEntry);
+  });
   return searchResults;
 }

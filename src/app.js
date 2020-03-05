@@ -1,12 +1,25 @@
 import './app.scss';
 import { createElement, appendElement, removeAllChilds } from './lib/dom';
 import { createTitle } from './components/title';
-import { pokemons } from './components/data';
+// import { pokemons } from './components/data';
 import { createSearch, createSearchResults } from './components/search';
 import { createFavoritesSection } from './components/favorites';
 import Logo from './assets/img/logo.png';
 
 export function app() {
+  // Load data
+  async function getPokemons() {
+    const response = await fetch(
+      'https://pokeapi.co/api/v2/pokemon?limit=1000'
+    );
+    const results = await response.json();
+    const pokemons = results.results;
+    const pokemonNames = pokemons.map(pokemon => {
+      return pokemon.name;
+    });
+    return pokemonNames;
+  }
+
   // Create elements
 
   const headerElement = createElement('header', {
@@ -41,10 +54,11 @@ export function app() {
   const searchValue = searchElement.value;
   let searchResults = createSearchResults(
     searchValue,
-    pokemons,
+    getPokemons,
     handleFavoriteButtonClick
   );
-  searchResultsWrapper.appendChild(searchResults);
+  console.log(searchResults);
+  // searchResultsWrapper.appendChild(searchResults);
 
   // Build app
 
@@ -95,12 +109,12 @@ export function app() {
     return favorites;
   }
 
-  searchElement.addEventListener('input', event => {
+  searchElement.addEventListener('input', async event => {
     const searchValue = event.target.value;
 
-    searchResults = createSearchResults(
+    searchResults = await createSearchResults(
       searchValue,
-      pokemons,
+      getPokemons,
       handleFavoriteButtonClick
     );
     searchResultsWrapper = removeAllChilds(searchResultsWrapper);
