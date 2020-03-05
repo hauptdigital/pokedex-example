@@ -20,10 +20,57 @@ export function createResultElements(searchQueryResults) {
   searchQueryResults.forEach(searchQueryResult => {
     let randomBgColorClass =
       bgColorClasses[Math.floor(Math.random() * bgColorClasses.length)];
+
     let searchResultsEntry = createElement('div', {
       classList: 'search-results__entry ' + randomBgColorClass,
       innerText: searchQueryResult
     });
+
+    let favoriteButton = createElement('button', {
+      classList: 'search-results__favorite',
+      innerText: 'favorite'
+    });
+
+    /* Favorites functionality */
+
+    favoriteButton.dataset.entry = searchQueryResult;
+    const dataEntry = favoriteButton.dataset.entry;
+
+    // Read favorites from localStorage
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+    // Find out if entry is already favorite and add class active if true
+    const index = favorites.indexOf(dataEntry);
+    const isFavorite = index > -1;
+    if (isFavorite) {
+      favoriteButton.classList.add('active');
+    }
+
+    // Click
+    favoriteButton.addEventListener('click', event => {
+      // Read favorites from localStorage
+      const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+      // Toggle active class on button
+      const button = event.target;
+      const dataEntry = button.dataset.entry;
+      button.classList.toggle('active');
+
+      // Push / splice entry into / from favorites
+
+      if (!favorites.includes(dataEntry)) {
+        favorites.push(dataEntry);
+      } else {
+        const dataEntryIndex = favorites.indexOf(dataEntry);
+        favorites.splice(dataEntryIndex, 1);
+      }
+
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+      console.log(favorites);
+    });
+
+    searchResultsEntry.appendChild(favoriteButton);
+
     searchResults.appendChild(searchResultsEntry);
   });
 
