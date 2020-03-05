@@ -57,7 +57,7 @@ export function createResultElements(searchQueryResults) {
       button.classList.toggle('active');
 
       // Push / splice entry into / from favorites
-      const isActive = button.classList.contains('active') ? true : false;
+      const isActive = button.classList.contains('active');
       if (!favorites.includes(dataEntry) && isActive) {
         favorites.push(dataEntry);
       } else if (!isActive) {
