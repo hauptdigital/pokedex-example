@@ -31,14 +31,32 @@ export function createResultElements(searchQueryResults) {
       innerText: 'favorit'
     });
 
-    favoriteButton.dataset.entry = searchQueryResult;
+    /* Favorites functionality */
 
+    favoriteButton.dataset.entry = searchQueryResult;
+    const dataEntry = favoriteButton.dataset.entry;
+
+    // Read favorites from localStorage
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+    // Find out if entry is already favorite and add class active if true
+    const index = favorites.indexOf(dataEntry);
+    const isFavorite = index > -1 ? true : false;
+    if (isFavorite) {
+      favoriteButton.classList.add('active');
+    }
+
+    // Click
     favoriteButton.addEventListener('click', event => {
+      // Read favorites from localStorage
       const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
+      // Toggle active class on button
       const button = event.target;
       const dataEntry = button.dataset.entry;
       button.classList.toggle('active');
+
+      // Push / splice entry into / from favorites
       const isActive = button.classList.contains('active') ? true : false;
       if (!favorites.includes(dataEntry) && isActive) {
         favorites.push(dataEntry);
@@ -52,7 +70,9 @@ export function createResultElements(searchQueryResults) {
       localStorage.setItem('favorites', JSON.stringify(favorites));
       console.log(favorites);
     });
+
     searchResultsEntry.appendChild(favoriteButton);
+
     searchResults.appendChild(searchResultsEntry);
   });
 
