@@ -1,7 +1,7 @@
 import './search.scss';
 import { createElement } from '../lib/dom';
 import { bgColorClasses } from './data';
-import { createFavoritesSection, createFavoriteButton } from './favorites';
+import { createFavoriteButton } from './favorites';
 
 export function createSearch(props) {
   const element = createElement('input', {
@@ -14,7 +14,10 @@ export function createSearch(props) {
   return element;
 }
 
-export function createResultElements(searchQueryResults) {
+export function createResultElements(
+  searchQueryResults,
+  onFavoriteButtonClick
+) {
   let searchResults = createElement('div', {
     className: 'search-results__list'
   });
@@ -31,37 +34,9 @@ export function createResultElements(searchQueryResults) {
     const favoriteButton = createFavoriteButton(searchQueryResult);
     searchResultsEntry.appendChild(favoriteButton);
 
-    // const dataEntry = favoriteButton.dataset.entry;
-
-    // Read favorites from localStorage
-    // const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-
     // Click
     favoriteButton.addEventListener('click', event => {
-      // Read favorites from localStorage
-      const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-
-      // Toggle active class on button
-      const button = event.target;
-      const dataEntry = button.dataset.entry;
-      button.classList.toggle('active');
-
-      // Push / splice entry into / from favorites
-
-      if (!favorites.includes(dataEntry)) {
-        favorites.push(dataEntry);
-      } else {
-        const dataEntryIndex = favorites.indexOf(dataEntry);
-        favorites.splice(dataEntryIndex, 1);
-      }
-
-      localStorage.setItem('favorites', JSON.stringify(favorites));
-
-      /* Edit Favorites Section */
-
-      createFavoritesSection(favorites);
-
-      console.log(favorites);
+      onFavoriteButtonClick(event);
     });
 
     searchResults.appendChild(searchResultsEntry);
@@ -79,8 +54,11 @@ export function filterResults(searchQuery, data) {
   return result;
 }
 
-export function createSearchResults(searchValue, data) {
+export function createSearchResults(searchValue, data, onFavoriteButtonClick) {
   const filteredItems = filterResults(searchValue, data);
-  const searchResults = createResultElements(filteredItems);
+  const searchResults = createResultElements(
+    filteredItems,
+    onFavoriteButtonClick
+  );
   return searchResults;
 }
